@@ -76,7 +76,25 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
+    const id = req.params.id
 
+    Post.destroy({
+        where: {id: id}
+    }).then( data=> {
+        if(data == 1){
+            res.send({
+                message: "Post was deleted successfully"
+            })
+        }else{
+            res.send({
+                message: `Error delete post with id=${id}`
+            })
+        }
+    }).catch( err => {
+        res.status(500).send({
+            message: `Could not delete post with id=${id}`
+        })
+    })
 }
 
 exports.deleteAll = (req, res) => {

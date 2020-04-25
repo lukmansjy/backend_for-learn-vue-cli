@@ -15,5 +15,8 @@ module.exports = app => {
     // Update post
     router.put('/:id', posts.update)
 
+    // Delete post
+    router.delete('/:id', posts.delete)
+
     app.use('/api/posts', router)
 }
