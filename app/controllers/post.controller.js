@@ -48,13 +48,31 @@ exports.findOne = (req, res) => {
             res.send(data)
         }).catch(err => {
             res.status(500).send({
-                message: "Error retrieving post with id=" + id
+                message: `Error retrieving post with id=${id}`
             })
         })
 }
 
 exports.update = (req, res) => {
+    const id = req.params.id
 
+    Post.update(req.body, {
+        where: {id: id}
+    }).then(data => {
+        if(data == 1){
+            res.send({
+                message: "Post was updated successfully"
+            })
+        }else{
+            res.send({
+                message: `Cannot update Post with id=${id}`
+            })
+        }
+    }).catch( err =>{
+        res.status(500).send({
+            message: `Error updating post with id=${id}`
+        })
+    })
 }
 
 exports.delete = (req, res) => {
