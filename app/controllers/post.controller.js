@@ -98,9 +98,33 @@ exports.delete = (req, res) => {
 }
 
 exports.deleteAll = (req, res) => {
-
+    Post.destroy({
+        where: {}
+    }).then( data=> {
+        if(data == 1){
+            res.send({
+                message: "All post was deleted successfully"
+            })
+        }else{
+            res.send({
+                message: "Error delete all post"
+            })
+        }
+    }).catch( err => {
+        res.status(500).send({
+            message: "Could not delete all post"
+        })
+    })
 }
 
-exports.findAllPublished = (req, res) => {
-
+exports. findAllPublished = (req, res) => {
+    Post.findAll({
+        where: {published: true}
+    }).then(data=>{
+        res.send(data)
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occured while find post"
+        })
+    })
 }
